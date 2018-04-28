@@ -1,2 +1,3 @@
-//require('./literature');
-require('./resources');
+// require('./literature');
+// require('./resources');
+require('./annotations');
