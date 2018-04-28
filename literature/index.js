@@ -1,5 +1,5 @@
-const request = require('request');
 const fs = require('fs');
+const request = require('request');
 
 const URL = 'https://api.pharmgkb.org/v1/site/page/publications/PA448515?view=list';
 
@@ -8,6 +8,6 @@ request(URL, (err, res, body) => {
     return console.error('ERROR ->', err);
     process.exit(1);
   }
-  fs.writeFileSync('./literature/data.json', body);
+  fs.writeFileSync('./literature/data.json', 'utf8');
   process.exit(0);
 });

@@ -1,1 +1,2 @@
-require('./literature');
+//require('./literature');
+require('./resources');
