@@ -2,4 +2,5 @@
 // require('./resources');
 // require('./annotations');
 // require('./references');
-require('./filters');
+// require('./filters');
+require('./variants');
