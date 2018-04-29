@@ -9,13 +9,13 @@ const ids = _.map(json.data.relatedLiteratures, 'id');
 const getInfo = () => {
   if (ids.length > 0) {
     const id = ids.shift();
-    const url = `https://api.pharmgkb.org/v1/data/literature/${id}?view=min`;
+    const url = `https://api.pharmgkb.org/v1/site/literature/${id}?view=most`;
     request(url, (err, res, body) => {
       if (err) {
         return console.error('ERROR ->', err);
         process.exit(1);
       }
-      fs.writeFileSync(`./annotations/${id}.json`, body);
+      fs.writeFileSync(`./annotations/most/${id}.json`, body);
       getInfo();
     });
   } else {
