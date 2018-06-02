@@ -46,9 +46,18 @@ _.forEach(json, (variants, gene) => {
                 });
               }
             });
+            if (tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children[phenLen - 1].children.length === 0) {
+              tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children.pop();
+            }
           }
         });
+        if (tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children.length === 0) {
+          tool.children[geneLen - 1].children[varLen - 1].children.pop();
+        }
       });
+      if (tool.children[geneLen - 1].children[varLen - 1].children.length === 0) {
+        tool.children[geneLen - 1].children.pop();
+      }
     });
   }
 });
