@@ -9,7 +9,7 @@ const getTitle = (title) => {
 };
 
 let tool = {
-  name: 'Tool',
+  name: 'tool',
   children: [],
 };
 
@@ -33,20 +33,16 @@ _.forEach(json, (variants, gene) => {
           if (phen === 'efficacy' || phen === 'toxicity') {
             const phenLen = tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children.push({
               name: phen,
-              children: [],
+              value: 0,
             });
             _.forEach(sigs, (ids, sig) => {
               if (sig === 'yes') {
-                const sigLen = tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children[phenLen - 1].children.push({
-                  name: sig,
-                  value: 0,
-                });
                 _.forEach(ids, (cases) => {
-                  tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children[phenLen - 1].children[sigLen - 1].value += cases;
+                  tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children[phenLen - 1].value += cases;
                 });
               }
             });
-            if (tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children[phenLen - 1].children.length === 0) {
+            if (tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children[phenLen - 1].value === 0) {
               tool.children[geneLen - 1].children[varLen - 1].children[raceLen - 1].children.pop();
             }
           }
@@ -62,4 +58,24 @@ _.forEach(json, (variants, gene) => {
   }
 });
 
+const tree = {};
+
+_.forEach(tool.children, ({ name, children }) => {
+  const gene = name;
+  tree[gene] = {};
+  _.forEach(children, ({ name, children }) => {
+    const variant = name;
+    tree[gene][variant] = {};
+    _.forEach(children, ({ name, children }) => {
+      const race = name;
+      tree[gene][variant][race] = {};
+      _.forEach(children, ({ name, value }) => {
+        const phen = name;
+        tree[gene][variant][race][phen] = value; 
+      });
+    });
+  });
+});
+
 fs.writeFileSync(`./tool/tool.json`, JSON.stringify(tool));
+fs.writeFileSync(`./tool/tree.json`, JSON.stringify(tree));
